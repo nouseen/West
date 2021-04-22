@@ -18,4 +18,18 @@ class TheWay:
             print(i)
             if wayOrCut.getWay(i)==1:
                 wayOrCut.getHtml()
-            wayOrCut.cutMonster(monster,"王枪")
+            wayOrCut.cutMonster(monster)
+    def cutMonsterByWayBySkill(self,wayOrCut,theWay,monster,skill):
+        #恶魔广场专用
+        for i in theWay:
+            print(i)
+            if wayOrCut.getWay(i)==1:
+                wayOrCut.getHtml()
+            wayOrCut.cutMonsterBySkill(monster,skill)
+    def forThings(self,wayOrCut,theWay,monster,skill):
+        #刷材料专用
+        while 1==1:
+            for i in theWay:
+                if wayOrCut.getWay(i)==1:
+                    wayOrCut.getHtml()
+                    wayOrCut.cutMonsterBySkill(monster,skill)

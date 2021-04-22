@@ -1,11 +1,11 @@
 from baseOption.Dungeons import Dungeons
-from baseOption.PreUrl import PreUrl
+from baseOption.PreUrl import Urls
 from baseOption.TheWay import TheWay
 from baseOption.WayOrCut import WayOrCut
 
 
 url='http://f12.mxxy.paop.net/game_mxxy2/s12/c.rosyclouds?u=xxm233381&x=Q1UiVJnV8iLKR3On0oPw86_CXBD644m0nnnr_'
-wayOrCut = WayOrCut(url,PreUrl.preUrl8128)
+wayOrCut = WayOrCut(url, Urls.preUrl8128)
 way = TheWay()
 dungeons=Dungeons()
 wayOrCut.getHtml()
