@@ -23,7 +23,7 @@ class WayOrCut:
     # 打开当前URL
     def getHtml(self):
         # 打开当前URL
-        time.sleep(0.25)
+        time.sleep(0.3)
         statue = 1
         while self.connect() == 0:
             statue = 0
@@ -45,7 +45,7 @@ class WayOrCut:
         return statue
 
     def postForm(self, data):
-        time.sleep(0.4)
+        time.sleep(0.3)
         wb_data = requests.post(self.url, data)
         self.soup = BeautifulSoup(wb_data.text, 'html')
         print(self.act)
@@ -62,7 +62,7 @@ class WayOrCut:
         h_fresh = fresh['href']
         p = h_fresh.split('x=')
         self.url = self.preUrl + p[1]
-        self.act = way;
+        self.act = fresh.string;
         return 1
 
     def getWayAndGo(self, way):
@@ -73,18 +73,23 @@ class WayOrCut:
             self.getWay(way)
         return 1
 
-    # 获取操作URL
-    def getOperation(self, op):
-        refresh = self.soup.find('a', text=re.compile(op))
-        return self.anaUrlFromAMark(op, refresh)
-
     def getOperationByHrefNumber(self, hrefNumber):
         refresh = self.soup.findAll('a')[hrefNumber]
         return self.anaUrlFromAMark(refresh.string, refresh)
 
+    # 获取操作URL
+    def getOperation(self, op):
+        #获取操作URL 最新方法 删除图片后操作
+        imgs = self.soup.find_all("img")
+        for i in imgs:
+            i.decompose()
+        refresh = self.soup.find('a', text=re.compile(str(op)))
+        return self.anaUrlFromAMark(op, refresh)
+
     def anaUrlFromAMark(self, op, refresh):
         if refresh == None:
-            self.act = "查找" + op + "失败"
+            if op != '领奖':
+                self.act = "查找" + op + "失败"
             return 0
         hr = refresh['href']
         p = hr.split('x=')
@@ -148,7 +153,32 @@ class WayOrCut:
             if self.getOperation("返回") == 1:
                 self.getHtml()
 
-            # 连续砍怪
+    # 连续砍怪
+    def cutFixSiteMonsterBySkill(self, hrefNumber, skill):
+        # 砍完怪,仅用于刷材料
+        while self.getByHrefNumberAndGo(hrefNumber) == 1:
+            self.getHtml()
+            if self.getOperation("攻击") == 1:
+                self.getHtml()
+            while self.getOperation(skill) == 1 or self.getOperation('举火') == 1 or self.getOperation('排山') == 1 or self.getOperation('王枪') or self.getOperation('回马') == 1:
+                self.getHtml()
+            if self.getOperation("返回") == 1:
+                self.getHtml()
+
+    # 连续砍怪
+    def cutBOSSHomeBySkill(self, skill):
+        # 砍完怪,仅用于刷材料
+        while self.getByHrefNumberAndGo(1) == 1:
+            self.getHtml()
+            if self.getOperation("攻击") == 1:
+                self.getHtml()
+            # 砍怪
+            while self.getOperation(skill) == 1 or self.getOperation('举火') == 1 or self.getOperation('排山') == 1 or self.getOperation('王枪') or self.getOperation('回马') == 1:
+                self.getHtml()
+            self.getOperationAndGo("返回")
+            #进入下一层
+            if self.getWay(8) == 1:
+                self.getHtml()
 
     def useSkill(self, skill):
         # 连续砍怪

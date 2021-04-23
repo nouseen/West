@@ -23,10 +23,12 @@ class Dungeons:
         for i in option:
             if i == 6 or i == 4 or i == 2 or i == 8:
                 wayOrCut.getWayAndGo(i)
-            elif wayOrCut.getOperationAndGo(i) == 1:
-                print(i + "成功")
-            wayOrCut.useSkill(skill)
-            wayOrCut.getOperationAndGo("继续")
+            elif wayOrCut.getOperationAndGo(i) != 1:
+                print(i + "失败")
+            # 使用完技能会返回，腾云后不能点返回
+            if i != '腾云':
+                wayOrCut.useSkill(skill)
+                wayOrCut.getOperationAndGo("继续")
 
     def eatDanYao(self,wayOrCut,name):
         wayOrCut.getOperationAndGo(name)
@@ -48,12 +50,15 @@ class Dungeons:
     def xinshouqu(self, wayOrCut):
         # 新手区
         self.commonBySkill(wayOrCut, self.option.xinshouqu, '举火')
-        wayOrCut.cutMonster('材料','举火')
+        wayOrCut.cutMonsterBySkill('材料','举火')
 
         wayOrCut.getOperationAndGo("中心区")
-        wayOrCut.getOperationAndGo("中心区")
         wayOrCut.getOperationAndGo("声望区")
-        wayOrCut.cutMonster('声望','举火')
+        wayOrCut.cutMonsterBySkill('声望','举火')
+
+        wayOrCut.getOperationAndGo("中心区")
+        wayOrCut.getOperationAndGo("boss区")
+        wayOrCut.cutMonsterBySkill('回馈boss','举火')
 
     def updateInHell(self, wayOrCut, skill):
         # 地府刷怪

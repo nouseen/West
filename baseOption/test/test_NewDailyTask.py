@@ -2,8 +2,12 @@ import re
 from unittest import TestCase
 
 from baseOption.Dungeons import Dungeons
+from baseOption.TheOption import TheOption
 from baseOption.Urls import Urls
 from baseOption.WayOrCut import WayOrCut
+
+SKILL = "举火"
+SKILL_SINGLE = "回马"
 
 
 class TestNewDailyTask(TestCase):
@@ -12,13 +16,11 @@ class TestNewDailyTask(TestCase):
     def test_xinshouqu_cailiaoguai(self):
         # 初始化
         wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
-        # 加载页面
-        wayOrCut.getHtml()
         dungeons = Dungeons();
         # 打新手区
         dungeons.xinshouqu(wayOrCut)
 
-    # 打新手区
+    # 吃药
     def test_chiyao(self):
         # 初始化
         wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
@@ -39,9 +41,21 @@ class TestNewDailyTask(TestCase):
 
     def test_fuben(self):
         wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
-        baiGuLingMu=[6,8,6,6,2,2,'食尸鬼',8,8,6,2,2,'剥皮鬼',8,8,6,6,'炼尸鬼',4,4,8,8,4,4,4,8,8,'白骨将',8,6,6,6,'大祭祀',2,2,4,8,6,'白骨夫人','白骨宝箱',"继续"]
         dungeons = Dungeons()
-        dungeons.commonBySkill(wayOrCut, baiGuLingMu, "举火")
+        dungeons.allDungeonsAuto(wayOrCut, SKILL_SINGLE)
+
+    def test_fuben_single(self):
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+        dungeons = Dungeons()
+        dungeons.commonBySkill(wayOrCut, TheOption.huaShengShi_vip, SKILL_SINGLE)
+
+    def test_shifangzhen(self):
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+        wayOrCut.cutMonsterBySkill('十方', SKILL_SINGLE)
+
+    def test_BossHome(self):
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+        wayOrCut.cutBOSSHomeBySkill(SKILL_SINGLE)
 
     def test_for(self):
         for i in ("ddd", "xxx"):
@@ -52,5 +66,6 @@ class TestNewDailyTask(TestCase):
             print(1)
         if 0:
             print(2)
+
 
 pass
