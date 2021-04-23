@@ -11,6 +11,7 @@ class WayOrCut:
         self.preUrl = preUrl
         self.act = "连接成功"
         self.isEnableHtmlOut = 0
+        self.flashPeriod = 0.32
         self.getHtml()
 
     def connect(self):
@@ -23,7 +24,7 @@ class WayOrCut:
     # 打开当前URL
     def getHtml(self):
         # 打开当前URL
-        time.sleep(0.3)
+        time.sleep(self.flashPeriod)
         statue = 1
         while self.connect() == 0:
             statue = 0
@@ -45,7 +46,7 @@ class WayOrCut:
         return statue
 
     def postForm(self, data):
-        time.sleep(0.3)
+        time.sleep(self.flashPeriod)
         wb_data = requests.post(self.url, data)
         self.soup = BeautifulSoup(wb_data.text, 'html')
         print(self.act)
@@ -182,9 +183,9 @@ class WayOrCut:
 
     def useSkill(self, skill):
         # 连续砍怪
-        while self.getOperation(skill) or self.getOperation('举火') == 1 or self.getOperation('回马') == 1 or self.getOperation('排山') == 1 or self.getOperation('王枪'):
+        while self.getOperation(skill) or self.getOperation('举火') == 1 or self.getOperation('回马') == 1 or self.getOperation('排山') == 1 or self.getOperation('王枪') or self.getOperation('攻击'):
             while self.getHtml() == 0:
-                if self.getOperation(skill) or self.getOperation('举火') == 1 or self.getOperation('回马') == 1 or self.getOperation('排山') == 1 or self.getOperation('王枪'):
+                if self.getOperation(skill) or self.getOperation('举火') == 1 or self.getOperation('回马') == 1 or self.getOperation('排山') == 1 or self.getOperation('王枪') or self.getOperation('攻击'):
                     print("重连成功")
             if self.getOperation("返回游戏") == 1:
                 self.getHtml()

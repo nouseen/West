@@ -2,7 +2,8 @@ import re
 from unittest import TestCase
 
 from baseOption.Dungeons import Dungeons
-from baseOption.TheOption import TheOption
+from baseOption.OptionHelper import OptionHelper
+from baseOption.TheOption import TheOption, get_vip
 from baseOption.Urls import Urls
 from baseOption.WayOrCut import WayOrCut
 
@@ -47,7 +48,7 @@ class TestNewDailyTask(TestCase):
     def test_fuben_single(self):
         wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
         dungeons = Dungeons()
-        dungeons.commonBySkill(wayOrCut, TheOption.huaShengShi_vip, SKILL_SINGLE)
+        dungeons.commonBySkill(wayOrCut, TheOption.bingJingTa_vip, SKILL_SINGLE)
 
     def test_shifangzhen(self):
         wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
@@ -66,6 +67,28 @@ class TestNewDailyTask(TestCase):
             print(1)
         if 0:
             print(2)
+
+    def test_array(self):
+        a = [1,2,3]
+        b = [3,5,7]
+
+        a.extend(b)
+        for i in a:
+            print(i)
+
+    def test_get_vip1(self):
+        result = OptionHelper.get_vip('123',[1,3,5])
+        for i in result:
+            print(i)
+
+    def test_get_vip23(self):
+        result = get_vip('123',[1,3,5])
+        for i in result:
+            print(i)
+
+    def test_get_vip3(self):
+        for i in TheOption.huaShengShi_vip:
+            print(i)
 
 
 pass
