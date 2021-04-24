@@ -31,14 +31,13 @@ class TestNewDailyTask(TestCase):
             dungeons = Dungeons();
             dungeons.eatDanYao(wayOrCut, str(name))
 
-    # 强化装备
+    # 强化装备 13最后一个 吃药等
     def test_qianghua(self):
         # 初始化
         wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
         # 加载页面
-        wayOrCut.getHtml()
-        for i in range(1, 25):
-            wayOrCut.getByHrefNumberAndGo(3)
+        while wayOrCut.getByHrefNumberAndGo(4,"返回游戏"):
+            continue;
 
     def test_fuben(self):
         wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
@@ -48,15 +47,44 @@ class TestNewDailyTask(TestCase):
     def test_fuben_single(self):
         wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
         dungeons = Dungeons()
-        dungeons.commonBySkill(wayOrCut, TheOption.bingJingTa_vip, SKILL_SINGLE)
+        # BA_JIAO_DONG_VIP = ['发现', 8, 6, 2, '云里雾', 4, '雾里云', 6, 8, 6, '千年芭蕉精', 8, 8, 8, '牛魔王']
+        # LIU_LI_TA_VIP = [ 2, 6, '百花羞', 6, 6, 2, 2, 6, 6, 6, '四翼蛇精', 6, 2, 2, 2, 2, 2, 2, '烛阴', 2, 6, 6, 6, 6, 2, 2, 6, '狡兔妖后', 6, 6, 2, 2, 2, 6, 6, 6, '蓝彩毒后', '完成']
+        # dungeons.commonBySkill(wayOrCut, LIU_LI_TA_VIP, SKILL_SINGLE)
+        dungeons.commonBySkill(wayOrCut, TheOption.XIAO_LEI_YIN_SHI, SKILL_SINGLE)
 
     def test_shifangzhen(self):
         wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
         wayOrCut.cutMonsterBySkill('十方', SKILL_SINGLE)
 
+    def test_shijuezhen(self):
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+        wayOrCut.cutMonsterBySkill('十绝', SKILL_SINGLE)
+
     def test_BossHome(self):
         wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
         wayOrCut.cutBOSSHomeBySkill(SKILL_SINGLE)
+
+    def test_ge_ren_Boss(self):
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+
+        for i in range(1, 5):
+            wayOrCut.getOperationsAndGo(['挑战'])
+            wayOrCut.cutMonsterBySkill('击杀', SKILL_SINGLE)
+
+    def test_she_ji_tu(self):
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+        wayOrCut.getOperationsAndGo(['状态','十年','挑战','社稷图使者','【社稷图】','继续'])
+        wayOrCut.cutFixSiteMonsterBySkill(1, SKILL_SINGLE, '孟婆')
+
+    def test_shan_he_tu(self):
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+        wayOrCut.getOperationsAndGo(['状态','十年','挑战','社稷图使者','【山河图】','继续'])
+        wayOrCut.cutFixSiteMonsterBySkill(1, SKILL_SINGLE, '孟婆')
+
+    def test_tong_tian_ta(self):
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+        wayOrCut.getOperationsAndGo(['状态','十年','挑战','通天','通天'])
+        wayOrCut.cutFixSiteMonsterBySkill(1, SKILL_SINGLE, '孟婆')
 
     def test_for(self):
         for i in ("ddd", "xxx"):
@@ -69,20 +97,20 @@ class TestNewDailyTask(TestCase):
             print(2)
 
     def test_array(self):
-        a = [1,2,3]
-        b = [3,5,7]
+        a = [1, 2, 3]
+        b = [3, 5, 7]
 
         a.extend(b)
         for i in a:
             print(i)
 
     def test_get_vip1(self):
-        result = OptionHelper.get_vip('123',[1,3,5])
+        result = OptionHelper.get_vip('123', [1, 3, 5])
         for i in result:
             print(i)
 
     def test_get_vip23(self):
-        result = get_vip('123',[1,3,5])
+        result = get_vip('123', [1, 3, 5])
         for i in result:
             print(i)
 

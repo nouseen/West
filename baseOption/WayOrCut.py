@@ -80,7 +80,7 @@ class WayOrCut:
 
     # 获取操作URL
     def getOperation(self, op):
-        #获取操作URL 最新方法 删除图片后操作
+        # 获取操作URL 最新方法 删除图片后操作
         imgs = self.soup.find_all("img")
         for i in imgs:
             i.decompose()
@@ -95,7 +95,7 @@ class WayOrCut:
         hr = refresh['href']
         p = hr.split('x=')
         self.url = self.preUrl + p[1]
-        self.act = op
+        self.act = refresh.string
         return 1;
 
     # 获取操作URL
@@ -120,8 +120,15 @@ class WayOrCut:
             self.getOperation(op)
         return 1;
 
-    def getByHrefNumberAndGo(self, hrefNumber):
+    def getOperationsAndGo(self, ops):
+        for op in ops:
+            self.getOperationAndGo(op)
+        return 1;
+
+    def getByHrefNumberAndGo(self, hrefNumber, stopMark):
         result = self.getOperationByHrefNumber(hrefNumber)
+        if self.act == stopMark:
+            return 0;
         if result == 1:
             self.getHtml()
         return result;
@@ -155,10 +162,9 @@ class WayOrCut:
                 self.getHtml()
 
     # 连续砍怪
-    def cutFixSiteMonsterBySkill(self, hrefNumber, skill):
+    def cutFixSiteMonsterBySkill(self, hrefNumber, skill, stopMark):
         # 砍完怪,仅用于刷材料
-        while self.getByHrefNumberAndGo(hrefNumber) == 1:
-            self.getHtml()
+        while self.getByHrefNumberAndGo(hrefNumber, stopMark):
             if self.getOperation("攻击") == 1:
                 self.getHtml()
             while self.getOperation(skill) == 1 or self.getOperation('举火') == 1 or self.getOperation('排山') == 1 or self.getOperation('王枪') or self.getOperation('回马') == 1:
@@ -168,16 +174,16 @@ class WayOrCut:
 
     # 连续砍怪
     def cutBOSSHomeBySkill(self, skill):
+        self.getOperationsAndGo(['挑战', 'boss', '世界boss']);
         # 砍完怪,仅用于刷材料
-        while self.getByHrefNumberAndGo(1) == 1:
-            self.getHtml()
+        while self.getOperationAndGo('\*【') == 1:
             if self.getOperation("攻击") == 1:
                 self.getHtml()
             # 砍怪
             while self.getOperation(skill) == 1 or self.getOperation('举火') == 1 or self.getOperation('排山') == 1 or self.getOperation('王枪') or self.getOperation('回马') == 1:
                 self.getHtml()
             self.getOperationAndGo("返回")
-            #进入下一层
+            # 进入下一层
             if self.getWay(8) == 1:
                 self.getHtml()
 
