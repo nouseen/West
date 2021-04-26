@@ -11,7 +11,7 @@ class WayOrCut:
         self.preUrl = preUrl
         self.act = "连接成功"
         self.isEnableHtmlOut = 0
-        self.flashPeriod = 0.32
+        self.flashPeriod = 0.345
         self.getHtml()
 
     def connect(self):
@@ -174,7 +174,7 @@ class WayOrCut:
 
     # 连续砍怪
     def cutBOSSHomeBySkill(self, skill):
-        self.getOperationsAndGo(['挑战', 'boss', '世界boss']);
+        self.getOperationsAndGo(['状态','十年','挑战', 'boss', '世界boss']);
         # 砍完怪,仅用于刷材料
         while self.getOperationAndGo('\*【') == 1:
             if self.getOperation("攻击") == 1:

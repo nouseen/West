@@ -13,6 +13,21 @@ SKILL_SINGLE = "回马"
 
 class TestNewDailyTask(TestCase):
 
+    def test_full(self):
+        self.test_tong_tian_ta()
+        self.test_fuben()
+        self.test_xinshouqu_cailiaoguai()
+        self.test_shijuezhen()
+        self.test_shifangzhen()
+        self.test_BossHome()
+        self.test_she_ji_tu()
+        self.test_ge_ren_Boss
+
+    def test_tong_tian_ta(self):
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+        # wayOrCut.getOperationsAndGo(['状态','十年','挑战','通天','通天'])
+        wayOrCut.cutFixSiteMonsterBySkill(1, SKILL_SINGLE, '查看地图传送(1)')
+
     # 打新手区
     def test_xinshouqu_cailiaoguai(self):
         # 初始化
@@ -20,6 +35,56 @@ class TestNewDailyTask(TestCase):
         dungeons = Dungeons();
         # 打新手区
         dungeons.xinshouqu(wayOrCut)
+
+    def test_fuben(self):
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+        dungeons = Dungeons()
+        dungeons.allDungeonsAuto(wayOrCut, SKILL_SINGLE)
+
+    def test_fuben_single(self):
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+        dungeons = Dungeons()
+        # WU_DI_DONG = ['继续', '返回', '返回', '腾云', '无底洞', '激活【无底洞困难副本】', '继续',2,6,'【白鼠精】',4,2,2,6,6,2,4,'【黑鼠精】',6,6,8,8,6,8,8,4,'【田鼠精】',4,2,2,2,2,6,6,'【地涌夫人】']
+        # dungeons.commonBySkill(wayOrCut, WU_DI_DONG, SKILL_SINGLE)
+        dungeons.commonBySkill(wayOrCut, TheOption.SI_TUO_DONG_VIP, SKILL_SINGLE)
+
+    def test_shifangzhen(self):
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+        wayOrCut.getOperationsAndGo(['腾云','十方','十方','十方','继续'])
+        wayOrCut.cutMonsterBySkill('十方', SKILL_SINGLE)
+        wayOrCut.getOperationsAndGo('十方')
+
+    def test_shijuezhen(self):
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+        wayOrCut.getOperationsAndGo(['状态','十年','挑战','十绝','继续'])
+        wayOrCut.cutMonsterBySkill('十绝', SKILL_SINGLE)
+
+    def test_BossHome(self):
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+        wayOrCut.cutBOSSHomeBySkill(SKILL_SINGLE)
+
+    def test_ge_ren_Boss(self):
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+        wayOrCut.getOperationsAndGo(['状态','十年','挑战','挑战'])
+        for i in range(1, 7):
+            wayOrCut.getOperationsAndGo(['挑战'])
+            wayOrCut.cutMonsterBySkill('击杀', SKILL_SINGLE)
+
+    def test_she_ji_tu(self):
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+        wayOrCut.getOperationsAndGo(['状态','十年','挑战','社稷图使者','【社稷图】','继续'])
+        wayOrCut.cutFixSiteMonsterBySkill(1, SKILL_SINGLE, '孟婆')
+        self.test_shan_he_tu();
+
+    def test_shan_he_tu(self):
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+        wayOrCut.getOperationsAndGo(['状态','十年','挑战','社稷图使者','【山河图】','继续'])
+        wayOrCut.cutFixSiteMonsterBySkill(1, SKILL_SINGLE, '孟婆')
+
+    def test_shan_he_tu_vip(self):
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+        wayOrCut.getOperationsAndGo(['继续', '返回', '返回', '状态', '可点', '副本', '继续','山 河 图','继续'])
+        wayOrCut.cutFixSiteMonsterBySkill(1, SKILL_SINGLE, '孟婆')
 
     # 吃药
     def test_chiyao(self):
@@ -38,53 +103,6 @@ class TestNewDailyTask(TestCase):
         # 加载页面
         while wayOrCut.getByHrefNumberAndGo(4,"返回游戏"):
             continue;
-
-    def test_fuben(self):
-        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
-        dungeons = Dungeons()
-        dungeons.allDungeonsAuto(wayOrCut, SKILL_SINGLE)
-
-    def test_fuben_single(self):
-        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
-        dungeons = Dungeons()
-        # BA_JIAO_DONG_VIP = ['发现', 8, 6, 2, '云里雾', 4, '雾里云', 6, 8, 6, '千年芭蕉精', 8, 8, 8, '牛魔王']
-        # LIU_LI_TA_VIP = [ 2, 6, '百花羞', 6, 6, 2, 2, 6, 6, 6, '四翼蛇精', 6, 2, 2, 2, 2, 2, 2, '烛阴', 2, 6, 6, 6, 6, 2, 2, 6, '狡兔妖后', 6, 6, 2, 2, 2, 6, 6, 6, '蓝彩毒后', '完成']
-        # dungeons.commonBySkill(wayOrCut, LIU_LI_TA_VIP, SKILL_SINGLE)
-        dungeons.commonBySkill(wayOrCut, TheOption.XIAO_LEI_YIN_SHI, SKILL_SINGLE)
-
-    def test_shifangzhen(self):
-        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
-        wayOrCut.cutMonsterBySkill('十方', SKILL_SINGLE)
-
-    def test_shijuezhen(self):
-        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
-        wayOrCut.cutMonsterBySkill('十绝', SKILL_SINGLE)
-
-    def test_BossHome(self):
-        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
-        wayOrCut.cutBOSSHomeBySkill(SKILL_SINGLE)
-
-    def test_ge_ren_Boss(self):
-        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
-
-        for i in range(1, 5):
-            wayOrCut.getOperationsAndGo(['挑战'])
-            wayOrCut.cutMonsterBySkill('击杀', SKILL_SINGLE)
-
-    def test_she_ji_tu(self):
-        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
-        wayOrCut.getOperationsAndGo(['状态','十年','挑战','社稷图使者','【社稷图】','继续'])
-        wayOrCut.cutFixSiteMonsterBySkill(1, SKILL_SINGLE, '孟婆')
-
-    def test_shan_he_tu(self):
-        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
-        wayOrCut.getOperationsAndGo(['状态','十年','挑战','社稷图使者','【山河图】','继续'])
-        wayOrCut.cutFixSiteMonsterBySkill(1, SKILL_SINGLE, '孟婆')
-
-    def test_tong_tian_ta(self):
-        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
-        wayOrCut.getOperationsAndGo(['状态','十年','挑战','通天','通天'])
-        wayOrCut.cutFixSiteMonsterBySkill(1, SKILL_SINGLE, '孟婆')
 
     def test_for(self):
         for i in ("ddd", "xxx"):
