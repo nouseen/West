@@ -109,7 +109,7 @@ class Dungeons:
         wayOrCut.getOperationAndGo("群魔")
         wayOrCut.getOperationAndGo("继续")
         while 1 == 1:
-            for i in self.way.way5Plus5:
+            for i in self.way.way2Plus3:
                 wayOrCut.getWayAndGo(i)
                 if wayOrCut.matchTheXinMo() == 1:
                     wayOrCut.useSkill("回马")

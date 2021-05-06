@@ -224,7 +224,7 @@ class WayOrCut:
         word = re.findall(u'刷新.*?请选择出口', string)
         print(word)
         if len(word) == 1:
-            if '系统' in word[0] or '喇叭' in word[0] or '【' in word[0]:
+            if '系统' in word[0] or '喇叭' in word[0] or '【' in word[0] or '十字' in word[0]:
                 return 0
             word1 = re.findall('x=.{0,50}\">', word[0])
             if len(word1) != 1:

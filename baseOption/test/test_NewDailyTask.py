@@ -15,18 +15,39 @@ class TestNewDailyTask(TestCase):
 
     def test_full(self):
         self.test_tong_tian_ta()
+        self.test_tong_tian_ta_vip()
         self.test_fuben()
-        self.test_xinshouqu_cailiaoguai()
+        # self.test_xinshouqu_cailiaoguai()
         self.test_shijuezhen()
         self.test_shifangzhen()
         self.test_BossHome()
         self.test_she_ji_tu()
-        self.test_ge_ren_Boss
+        self.test_ge_ren_Boss()
 
     def test_tong_tian_ta(self):
         wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
-        # wayOrCut.getOperationsAndGo(['状态','十年','挑战','通天','通天'])
+        wayOrCut.getOperationsAndGo(['状态','十年','挑战','通天','通天'])
         wayOrCut.cutFixSiteMonsterBySkill(1, SKILL_SINGLE, '查看地图传送(1)')
+
+    def test_ba_shi_yi_nan(self):
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+        wayOrCut.getOperationsAndGo(['状态','十年','挑战','八十一'])
+        wayOrCut.cutFixSiteMonsterBySkill(1, SKILL_SINGLE, '孟婆')
+
+    def test_da_nao_tian_gong(self):
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+        wayOrCut.getOperationsAndGo(['状态','十年','挑战','天宫'])
+        wayOrCut.cutFixSiteMonsterBySkill(1, SKILL_SINGLE, '孟婆')
+
+    def test_da_nao_di_fu(self):
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+        wayOrCut.getOperationsAndGo(['状态','十年','挑战','地府'])
+        wayOrCut.cutFixSiteMonsterBySkill(1, SKILL_SINGLE, '孟婆')
+
+    def test_tong_tian_ta_vip(self):
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+        wayOrCut.getOperationsAndGo(['状态','可点','副本','通 天 塔'])
+        wayOrCut.cutFixSiteMonsterBySkill(1, SKILL_SINGLE, '进入【通天塔37层】')
 
     # 打新手区
     def test_xinshouqu_cailiaoguai(self):
@@ -52,11 +73,13 @@ class TestNewDailyTask(TestCase):
         wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
         wayOrCut.getOperationsAndGo(['腾云','十方','十方','十方','继续'])
         wayOrCut.cutMonsterBySkill('十方', SKILL_SINGLE)
-        wayOrCut.getOperationsAndGo('十方')
+        wayOrCut.getByHrefNumberAndGo(1,"")
+        wayOrCut.getByHrefNumberAndGo(0,"")
+
 
     def test_shijuezhen(self):
         wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
-        wayOrCut.getOperationsAndGo(['状态','十年','挑战','十绝','继续'])
+        wayOrCut.getOperationsAndGo(['状态','十年','挑战','十绝','十绝','继续'])
         wayOrCut.cutMonsterBySkill('十绝', SKILL_SINGLE)
 
     def test_BossHome(self):
@@ -75,6 +98,7 @@ class TestNewDailyTask(TestCase):
         wayOrCut.getOperationsAndGo(['状态','十年','挑战','社稷图使者','【社稷图】','继续'])
         wayOrCut.cutFixSiteMonsterBySkill(1, SKILL_SINGLE, '孟婆')
         self.test_shan_he_tu();
+        self.test_shan_he_tu_vip();
 
     def test_shan_he_tu(self):
         wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
@@ -95,6 +119,40 @@ class TestNewDailyTask(TestCase):
         for name in range(52, 53):
             dungeons = Dungeons();
             dungeons.eatDanYao(wayOrCut, str(name))
+
+    # 群
+    def test_qunMoZheng(self):
+        # 初始化
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+        # 加载页面
+        wayOrCut.getHtml()
+        dungeons = Dungeons();
+        dungeons.qunMoZheng(wayOrCut)
+
+    # 加神通
+    def test_shentong(self):
+        # 初始化
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+        # 加载页面
+        for name in range(0, 44):
+            wayOrCut.getByHrefNumberAndGo(19,"返回游戏")
+            # wayOrCut.getByHrefNumberAndGo(0,"返回游戏")
+
+    # 加神通
+    def test_shengji(self):
+        # 初始化
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+        # 加载页面
+        for name in range(0, 219):
+            wayOrCut.getOperationsAndGo(['升级','返回上级'])
+
+    # 强化
+    def test_jingjie(self):
+        # 初始化
+        wayOrCut = WayOrCut(Urls.fullUrl828, Urls.preUrl8128)
+        # 加载页面
+        for name in range(0, 1500):
+            wayOrCut.getOperationsAndGo(['进阶'])
 
     # 强化装备 13最后一个 吃药等
     def test_qianghua(self):
